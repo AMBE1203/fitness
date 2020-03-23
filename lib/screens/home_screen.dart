@@ -1,5 +1,6 @@
 import 'package:fitness_app/app_theme.dart';
 import 'package:fitness_app/models/tab_icon_data.dart';
+import 'package:fitness_app/screens/training_screen.dart';
 import 'package:fitness_app/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -98,10 +99,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      MyDiaryScreen(
-                        animationController: animationController,
-                      );
+                   tabBody =
+                      TrainingScreen(animationController: animationController);
                 });
               });
             }

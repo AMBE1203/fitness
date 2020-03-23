@@ -1,28 +1,26 @@
-import 'package:fitness_app/app_theme.dart';
-import 'package:fitness_app/widgets/body_measurement.dart';
-import 'package:fitness_app/widgets/glass_view.dart';
-import 'package:fitness_app/widgets/meals_list_view.dart';
-import 'package:fitness_app/widgets/mediterranesn_diet_view.dart';
+import 'package:fitness_app/widgets/area_list_view.dart';
+import 'package:fitness_app/widgets/running_view.dart';
 import 'package:fitness_app/widgets/title_view.dart';
-import 'package:fitness_app/widgets/water_view.dart';
+import 'package:fitness_app/widgets/workout_view.dart';
 import 'package:flutter/material.dart';
 
-class MyDiaryScreen extends StatefulWidget {
-  const MyDiaryScreen({Key key, this.animationController}) : super(key: key);
+import '../app_theme.dart';
+
+class TrainingScreen extends StatefulWidget {
+  const TrainingScreen({Key key, this.animationController}) : super(key: key);
 
   final AnimationController animationController;
-
   @override
-  _MyDiaryScreenState createState() => _MyDiaryScreenState();
+  _TrainingScreenState createState() => _TrainingScreenState();
 }
 
-class _MyDiaryScreenState extends State<MyDiaryScreen>
+class _TrainingScreenState extends State<TrainingScreen>
     with TickerProviderStateMixin {
   Animation<double> topBarAnimation;
 
   List<Widget> listViews = <Widget>[];
-  double topBarOpacity = 0.0;
   final ScrollController scrollController = ScrollController();
+  double topBarOpacity = 0.0;
 
   @override
   void initState() {
@@ -30,8 +28,8 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         CurvedAnimation(
             parent: widget.animationController,
             curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
-
     addAllListData();
+
     scrollController.addListener(() {
       if (scrollController.offset >= 24) {
         if (topBarOpacity != 1.0) {
@@ -58,31 +56,22 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
   }
 
   void addAllListData() {
-    const int count = 9;
-
-    listViews.add(TitleView(
-      titleTxt: 'Mediterranean diet',
-      subTxt: 'Details',
-      animationController: widget.animationController,
-      animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-          parent: widget.animationController,
-          curve: Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
-    ));
-
-    listViews.add(MediterranesnDietView(
-      animationController: widget.animationController,
-      animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-          parent: widget.animationController,
-          curve: Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn),
-        ),
-      ),
-    ));
+    const int count = 5;
 
     listViews.add(
       TitleView(
-        titleTxt: 'Meals today',
-        subTxt: 'Customize',
+        titleTxt: 'Your program',
+        subTxt: 'Details',
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController,
+            curve:
+                Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController,
+      ),
+    );
+
+    listViews.add(
+      WorkoutView(
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
@@ -90,20 +79,20 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         animationController: widget.animationController,
       ),
     );
-
-    listViews.add(MealsListView(
-      mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-          CurvedAnimation(
-              parent: widget.animationController,
-              curve:
-                  Interval((1 / count) * 3, 1.0, curve: Curves.fastOutSlowIn))),
-      mainScreenAnimationController: widget.animationController,
-    ));
+    listViews.add(
+      RunningView(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController,
+            curve:
+                Interval((1 / count) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController,
+      ),
+    );
 
     listViews.add(
       TitleView(
-        titleTxt: 'Body measurement',
-        subTxt: 'Today',
+        titleTxt: 'Area of focus',
+        subTxt: 'more',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
@@ -113,50 +102,20 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     );
 
     listViews.add(
-      BodyMeasurementView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController,
-            curve:
-                Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController,
-      ),
-    );
-    listViews.add(
-      TitleView(
-        titleTxt: 'Water',
-        subTxt: 'Aqua SmartBottle',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController,
-            curve:
-                Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController,
-      ),
-    );
-
-    listViews.add(
-      WaterView(
+      AreaListView(
         mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
             CurvedAnimation(
                 parent: widget.animationController,
-                curve: Interval((1 / count) * 7, 1.0,
+                curve: Interval((1 / count) * 5, 1.0,
                     curve: Curves.fastOutSlowIn))),
         mainScreenAnimationController: widget.animationController,
       ),
     );
-    listViews.add(
-      GlassView(
-          animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-              CurvedAnimation(
-                  parent: widget.animationController,
-                  curve: Interval((1 / count) * 8, 1.0,
-                      curve: Curves.fastOutSlowIn))),
-          animationController: widget.animationController),
-    );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Future<bool> getData() async {
+    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
+    return true;
   }
 
   @override
@@ -178,11 +137,6 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     );
   }
 
-  Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
-    return true;
-  }
-
   Widget getMainListViewUI() {
     return FutureBuilder<bool>(
       future: getData(),
@@ -193,10 +147,11 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
           return ListView.builder(
             controller: scrollController,
             padding: EdgeInsets.only(
-                top: AppBar().preferredSize.height +
-                    MediaQuery.of(context).padding.top +
-                    24,
-                bottom: 62 + MediaQuery.of(context).padding.bottom),
+              top: AppBar().preferredSize.height +
+                  MediaQuery.of(context).padding.top +
+                  24,
+              bottom: 62 + MediaQuery.of(context).padding.bottom,
+            ),
             itemCount: listViews.length,
             scrollDirection: Axis.vertical,
             itemBuilder: (BuildContext context, int index) {
@@ -228,7 +183,8 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: AppTheme.grey.withOpacity(0.4 * topBarOpacity),
+                          color: AppTheme.grey
+                              .withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
                     ],
@@ -251,7 +207,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'My Diary',
+                                  'Training',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: AppTheme.fontName,
